@@ -1,160 +1,84 @@
-#include<iostream>
-#include<stdlib.h>
-#include<windows.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <math.h>
-#define GL_GLEXT_PROTOTYPES
-#ifdef __APPLE__
-#include <GL/glut.h>
-#else
-#include <GL/glut.h>
-#endif
+#include <GL\glut.h>
+
+GLfloat xRotated, yRotated, zRotated;
+GLdouble radius=1;
 
 
-// ----------------------------------------------------------
-// Declarações de Funções
-// ----------------------------------------------------------
-void display();
-void specialKeys();
+void redisplayFunc(void)
+{
 
-// ----------------------------------------------------------
-// Variáveis Globais
-// ----------------------------------------------------------
-double rotate_y=0;
-double rotate_x=0;
+    glMatrixMode(GL_MODELVIEW);
+    // clear the drawing buffer.
+    glClear(GL_COLOR_BUFFER_BIT);
+    // clear the identity matrix.
+    glLoadIdentity();
+    // traslate the draw by z = -4.0
+    // Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
+    glTranslatef(0.0,0.0,-4.5);
+    // Red color used to draw.
+    glColor3f(0.8, 0.2, 0.1);
+    // changing in transformation matrix.
+    // rotation about X axis
+    glRotatef(xRotated,1.0,0.0,0.0);
+    // rotation about Y axis
+    glRotatef(yRotated,0.0,1.0,0.0);
+    // rotation about Z axis
+    glRotatef(zRotated,0.0,0.0,1.0);
+    // scaling transfomation
+    glScalef(1.0,1.0,1.0);
+    // built-in (glut library) function , draw you a sphere.
+    glutSolidSphere(radius,20,20);
+    // Flush buffers to screen
 
-// ----------------------------------------------------------
-// função display()
-// ----------------------------------------------------------
-void display(){
-
-  //  Limpa a tela e o Z-Buffer
-  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-  // Reinicia transformações
-  glLoadIdentity();
-
-  // Outras Transformações
-  // glTranslatef( 0.1, 0.0, 0.0 );      // Não está incluído
-  // glRotatef( 180, 0.0, 1.0, 0.0 );    // Não está incluído
-
-  // Rotaciona quando o usuário muda rotate_x e rotate_y
-  glRotatef( rotate_x, 1.0, 0.0, 0.0 );
-  glRotatef( rotate_y, 0.0, 1.0, 0.0 );
-
-  // Outras Transformações
-  // glScalef( 2.0, 2.0, 0.0 );          // Não está incluído
-
-  //Lado multicolorido - FRENTE
- glBegin(GL_POLYGON);
-
-  glColor3f( 1.0, 0.0, 0.0 );     glVertex3f(  0.5, -0.5, -0.5 );      // P1 é vermelho
-  glColor3f( 0.0, 1.0, 0.0 );     glVertex3f(  0.5,  0.5, -0.5 );      // P2 é verde
-  glColor3f( 0.0, 0.0, 1.0 );     glVertex3f( -0.5,  0.5, -0.5 );      // P3 é azul
-  glColor3f( 1.0, 0.0, 1.0 );     glVertex3f( -0.5, -0.5, -0.5 );      // P4 é roxo
-
-  glEnd();
-
-  // Lado branco - TRASEIRA
- glBegin(GL_POLYGON);
-  glColor3f(   1.0,  1.0, 1.0 );
-  glVertex3f(  0.5, -0.5, 0.5 );
-  glVertex3f(  0.5,  0.5, 0.5 );
-  glVertex3f( -0.5,  0.5, 0.5 );
-  glVertex3f( -0.5, -0.5, 0.5 );
-  glEnd();
-
-  // Lado roxo - DIREITA
- glBegin(GL_POLYGON);
-  glColor3f(  1.0,  0.0,  1.0 );
-  glVertex3f( 0.5, -0.5, -0.5 );
-  glVertex3f( 0.5,  0.5, -0.5 );
-  glVertex3f( 0.5,  0.5,  0.5 );
-  glVertex3f( 0.5, -0.5,  0.5 );
-  glEnd();
-
-  // Lado verde - ESQUERDA
- glBegin(GL_POLYGON);
-  glColor3f(   0.0,  1.0,  0.0 );
-  glVertex3f( -0.5, -0.5, 0.5 );
-  glVertex3f( -0.5,  0.5,  0.5 );
-  glVertex3f( -0.5,  0.5, -0.5 );
-  glVertex3f( -0.5, -0.5, -0.5 );
-  glEnd();
-
-  // Lado azul - TOPO
- glBegin(GL_POLYGON);
-  glColor3f(   0.0,  0.0,  1.0 );
-  glVertex3f(  0.5,  0.5,  0.5 );
-  glVertex3f(  0.5,  0.5, -0.5 );
-  glVertex3f( -0.5,  0.5, -0.5 );
-  glVertex3f( -0.5,  0.5,  0.5 );
-  glEnd();
-
-  // Lado vermelho - BASE
- glBegin(GL_POLYGON);
-  glColor3f(   1.0,  0.0,  0.0 );
-  glVertex3f(  0.5, -0.5, -0.5 );
-  glVertex3f(  0.5, -0.5,  0.5 );
-  glVertex3f( -0.5, -0.5, 0.5 );
-  glVertex3f( -0.5, -0.5, -0.5 );
-  glEnd();
-
-  glFlush();
-  glutSwapBuffers();
-
+    glFlush();
+    // sawp buffers called because we are using double buffering
+   // glutSwapBuffers();
 }
 
-// ----------------------------------------------------------
-// Função specialKeys()
-// ----------------------------------------------------------
-void specialKeys( int key, int x, int y ) {
+void reshapeFunc(int x, int y)
+{
+    if (y == 0 || x == 0) return;  //Nothing is visible then, so return
+    //Set a new projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    //Angle of view:40 degrees
+    //Near clipping plane distance: 0.5
+    //Far clipping plane distance: 20.0
 
-  //  Seta direita - aumenta rotação em 5 graus
-  if (key == GLUT_KEY_RIGHT)
-    rotate_y += 5;
-
-  //  Seta para esquerda - diminui a rotação por 5 graus
-  else if (key == GLUT_KEY_LEFT)
-    rotate_y -= 5;
-
-  else if (key == GLUT_KEY_UP)
-    rotate_x += 5;
-
-  else if (key == GLUT_KEY_DOWN)
-    rotate_x -= 5;
-
-  //  Requisitar atualização do display
-  glutPostRedisplay();
-
+    gluPerspective(40.0,(GLdouble)x/(GLdouble)y,0.5,20.0);
+    glMatrixMode(GL_MODELVIEW);
+    glViewport(0,0,x,y);  //Use the whole window for rendering
 }
 
-// ----------------------------------------------------------
-// Função main()
-// ----------------------------------------------------------
-int main(int argc, char* argv[]){
+void idleFunc(void)
+{
 
-  //  Inicializa o GLUT e processa os parâmetros do usuário GLUT
-  glutInit(&argc,argv);
+     yRotated += 0.01;
 
-  //  Requisita uma janela com buffer duplo e true color com um Z-buffer
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    redisplayFunc();
+}
 
-  // Cria a janela do programa
-  glutCreateWindow("Super Cube");
 
-  //  Habilita o teste de profundidade do Z-buffer
-  glEnable(GL_DEPTH_TEST);
-
-  // Funções
-  glutDisplayFunc(display);
-  glutSpecialFunc(specialKeys);
-
-  //  Passa o controle dos eventos para o GLUT
-  glutMainLoop();
-
-  //  Retorna para o SO
-  return 0;
-
+int main (int argc, char **argv)
+{
+    //Initialize GLUT
+    glutInit(&argc, argv);
+    //double buffering used to avoid flickering problem in animation
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    // window size
+    glutInitWindowSize(400,350);
+    // create the window
+    glutCreateWindow("Sphere Rotating Animation");
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    xRotated = yRotated = zRotated = 30.0;
+     xRotated=33;
+     yRotated=40;
+    glClearColor(0.0,0.0,0.0,0.0);
+    //Assign  the function used in events
+    glutDisplayFunc(redisplayFunc);
+   glutReshapeFunc(reshapeFunc);
+    glutIdleFunc(idleFunc);
+    //Let start glut loop
+    glutMainLoop();
+    return 0;
 }
