@@ -1,145 +1,267 @@
-/*
- * OGL01Shape3D.cpp: 3D Shapes
- */
-#include <windows.h>  // for MS Windows
-#include <GL/glut.h>  // GLUT, include glu.h and gl.h
+//NAVEINIMIGA
 
-/* Global variables */
-char title[] = "3D Shapes";
+// OpenGL Utility Toolkit
+#include<GL/gl.h>
+#include<GL/glut.h>
+#include<iostream>
+#include<stdlib.h>
+#include<stdio.h>
+#include<windows.h>
 
-/* Initialize OpenGL Graphics */
-void initGL() {
-   glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
-   glClearDepth(1.0f);                   // Set background depth to farthest
-   glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
-   glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
-   glShadeModel(GL_SMOOTH);   // Enable smooth shading
-   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+
+// ----------------------------------------------------------
+// Declarações de Funções
+// ----------------------------------------------------------
+void display();
+void specialKeys();
+void DesenhaCUBAO();
+// ----------------------------------------------------------
+// Variáveis Globais
+// ----------------------------------------------------------
+double rotate_y=0;
+double rotate_x=0;
+
+// Apenas requerido pelas aplica��es em windows
+//#include <windows.h>
+
+// Inicializa��es de OpenGL que devem ser
+// executadas antes da exibi��o do desenho
+void Inicializa(){
+
+  // Define a janela de visualiza��o
+  glMatrixMode(GL_PROJECTION);
+
+  // Define o sistema de coordenadas
+  glOrtho(-8.0, 8.0, -8.0, 8.0, -8.0, 8.0);
+
+  // Define a cor de fundo da janela como azul
+  glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 
-/* Handler for window-repaint event. Called back when the window first appears and
-   whenever the window needs to be re-painted. */
-void display() {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear color and depth buffers
-   glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
+// Fun��o callback chamada para fazer o desenho
+void Desenha(){
 
-   // Render a color-cube consisting of 6 quads with different colors
-   glLoadIdentity();                 // Reset the model-view matrix
-   glTranslatef(1.5f, 0.0f, -7.0f);  // Move right and into the screen
+  // Limpa a janela de visualiza��o com a cor
+  // de fundo especificada
+  glClear(GL_COLOR_BUFFER_BIT);
 
-   glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f( 1.0f, 1.0f, -1.0f);
-      glVertex3f(-1.0f, 1.0f, -1.0f);
-      glVertex3f(-1.0f, 1.0f,  1.0f);
-      glVertex3f( 1.0f, 1.0f,  1.0f);
+  // Define a cor de desenho como vermelho
+  //glColor3f(1.0, 0.0, 0.0);
 
-      // Bottom face (y = -1.0f)
-      glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-      glVertex3f( 1.0f, -1.0f,  1.0f);
-      glVertex3f(-1.0f, -1.0f,  1.0f);
-      glVertex3f(-1.0f, -1.0f, -1.0f);
-      glVertex3f( 1.0f, -1.0f, -1.0f);
+  // Desenha um tri�ngulo
 
-      // Front face  (z = 1.0f)
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f( 1.0f,  1.0f, 1.0f);
-      glVertex3f(-1.0f,  1.0f, 1.0f);
-      glVertex3f(-1.0f, -1.0f, 1.0f);
-      glVertex3f( 1.0f, -1.0f, 1.0f);
 
-      // Back face (z = -1.0f)
-      glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-      glVertex3f( 1.0f, -1.0f, -1.0f);
-      glVertex3f(-1.0f, -1.0f, -1.0f);
-      glVertex3f(-1.0f,  1.0f, -1.0f);
-      glVertex3f( 1.0f,  1.0f, -1.0f);
+  // Reinicia transformações
+  glLoadIdentity();
 
-      // Left face (x = -1.0f)
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(-1.0f,  1.0f,  1.0f);
-      glVertex3f(-1.0f,  1.0f, -1.0f);
-      glVertex3f(-1.0f, -1.0f, -1.0f);
-      glVertex3f(-1.0f, -1.0f,  1.0f);
+  // Outras Transformações
+  // glTranslatef( 0.1, 0.0, 0.0 );      // Não está incluído
+  // glRotatef( 180, 0.0, 1.0, 0.0 );    // Não está incluído
 
-      // Right face (x = 1.0f)
-      glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-      glVertex3f(1.0f,  1.0f, -1.0f);
-      glVertex3f(1.0f,  1.0f,  1.0f);
-      glVertex3f(1.0f, -1.0f,  1.0f);
-      glVertex3f(1.0f, -1.0f, -1.0f);
-   glEnd();  // End of drawing color-cube
+  // Rotaciona quando o usuário muda rotate_x e rotate_y
+  glRotatef( rotate_x, 1.0, 0.0, 0.0 );
+  glRotatef( rotate_y, 0.0, 1.0, 0.0 );
 
-   // Render a pyramid consists of 4 triangles
-   glLoadIdentity();                  // Reset the model-view matrix
-   glTranslatef(-1.5f, 0.0f, -6.0f);  // Move left and into the screen
+// Nave inimigo
+
+  /*glBegin(GL_TRIANGLES);
+  glColor3f(1.0, 0.0, 0.0);
+    glVertex3f(0.5, 0.5, 0.0);
+    glVertex3f(-0.5, 0.5, 0.0);
+    glVertex3f(0.0, -0.5, 0.0);
+  glEnd();
+
+glBegin(GL_TRIANGLES);
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(-0.5, -0.5, 0.0);
+    glVertex3f(0.5, -0.5, 0.0);
+    glVertex3f(0.0, 0.5, 0.0);
+  glEnd();
+
+glBegin(GL_TRIANGLES);
+    glColor3f(0.0, 0.0, 1.0);
+    glVertex3f(-0.25, -0.25, 0.0);
+    glVertex3f(0.25, -0.25, 0.0);
+    glVertex3f(0.0, 0.25, 0.0);
+  glEnd();
+*/
+
+glBegin(GL_TRIANGLES);
+         // Begin drawing the pyramid with 4 triangles
+      // Front
+      glColor3f(1.0, 0.0, 0.0);     // Red
+      glVertex3f( 0.0, -0.25, 0.0);
+      glVertex3f(0.50, 0.50, -0.50);
+      glVertex3f(-0.50, 0.50, -0.50);
+
+      // Right
+      glVertex3f(0.0, -0.50, 0.0);
+      glColor3f( 0.0, 1.0, 0.0 );
+      glVertex3f(-0.50, 0.50, -0.50);
+      glVertex3f(-0.50, 0.50, 0.50);
+
+      // Back
+      glVertex3f(0.0, -0.50, 0.0);
+      glColor3f( 0.0, 0.0, 1.0 );
+      glVertex3f(-0.50, 0.55, 0.50);
+      glVertex3f(0.50, 0.50, 0.50);
+
+      // Left
+      glVertex3f( 0.0, -0.50, 0.0);
+      glColor3f( 1.0, 0.0, 1.0 );
+      glVertex3f(0.50,0.50,0.50);
+      glVertex3f(0.50,0.50, -0.50);
+   glEnd();
+
+
+
 
    glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(-1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
+      glColor3f(1.0, 0.0, 0.0);     // Red
+      glVertex3f( 0.0, -0.25, 0.0);
+      glVertex3f(0.25, 0.25, -0.25);
+      glVertex3f(-0.25, 0.25, -0.25);
 
       // Right
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(1.0f, -1.0f, 1.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
+      glVertex3f(0.0, -0.25, 0.0);
+      glVertex3f(-0.25, 0.25, -0.25);
+      glVertex3f(-0.25, 0.25, 0.25);
 
       // Back
-      glColor3f(1.0f, 0.0f, 0.0f);     // Red
-      glVertex3f(0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f, 1.0f, 0.0f);     // Green
-      glVertex3f(1.0f, -1.0f, -1.0f);
-      glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-      glVertex3f(-1.0f, -1.0f, -1.0f);
+      glVertex3f(0.0, -0.25, 0.0);
+      glVertex3f(-0.25, 0.25, 0.25);
+      glVertex3f(0.25, 0.25, 0.25);
 
       // Left
-      glColor3f(1.0f,0.0f,0.0f);       // Red
-      glVertex3f( 0.0f, 1.0f, 0.0f);
-      glColor3f(0.0f,0.0f,1.0f);       // Blue
-      glVertex3f(-1.0f,-1.0f,-1.0f);
-      glColor3f(0.0f,1.0f,0.0f);       // Green
-      glVertex3f(-1.0f,-1.0f, 1.0f);
-   glEnd();   // Done drawing the pyramid
+      glVertex3f( 0.0, -0.25, 0.0);
+      glVertex3f(0.25,0.25,0.25);
+      glVertex3f(0.25,0.25, -0.25);
+   glEnd();
 
-   glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+   ///////////////////////////////////////////aaaaaaaaaaaaaaaaaaa
+
+ //glLoadIdentity();                  // Reset the model-view matrix
+   glTranslatef(0.0f, 0.75f, 0.0f);
+
+   glBegin(GL_POLYGON);
+
+  glColor3f(   0.3,  0.1, 0.7 );
+  glVertex3f(  0.2, -0.5, 0.2 );
+  glVertex3f(  0.2,  0.5, 0.2 );
+  glVertex3f( -0.2,  0.5, 0.2 );
+  glVertex3f( -0.2, -0.5, 0.2 );
+  glEnd();
+
+  // Lado roxo - DIREITA
+ glBegin(GL_POLYGON);
+  glColor3f(  1.0,  0.0,  1.0 );
+  glVertex3f( 0.2, -0.5, -0.2 );
+  glVertex3f( 0.2,  0.5, -0.2 );
+  glVertex3f( 0.2,  0.5,  0.2 );
+  glVertex3f( 0.2, -0.5,  0.2 );
+  glEnd();
+
+  // Lado verde - ESQUERDA
+ glBegin(GL_POLYGON);
+  glColor3f(   0.4,  1.0,  0.0 );
+  glVertex3f( -0.2, -0.5, 0.2 );
+  glVertex3f( -0.2,  0.5,  0.2 );
+  glVertex3f( -0.2,  0.5, -0.2 );
+  glVertex3f( -0.2, -0.5, -0.2 );
+  glEnd();
+
+  // Lado azul - TOPO
+ glBegin(GL_POLYGON);
+  glColor3f(   0.0,  0.2,  1.0 );
+  glVertex3f(  0.2,  0.5,  0.2 );
+  glVertex3f(  0.2,  0.5, -0.2 );
+  glVertex3f( -0.2,  0.5, -0.2 );
+  glVertex3f( -0.2,  0.5,  0.2 );
+  glEnd();
+
+  // Lado vermelho - BASE
+ glBegin(GL_POLYGON);
+  glColor3f(   1.0,  0.0,  0.0 );
+  glVertex3f(  0.2, -0.5, -0.2 );
+  glVertex3f(  0.2, -0.5,  0.2 );
+  glVertex3f( -0.2, -0.5, 0.2);
+  glVertex3f( -0.2, -0.5, -0.2 );
+  glEnd();
+
+
+  // Executa os comandos OpenGL para renderiza��o
+  glFlush();
+  glutSwapBuffers();
+
 }
 
-/* Handler for window re-size event. Called back when the window first appears and
-   whenever the window is re-sized with its new width and height */
-void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
-   // Compute aspect ratio of the new window
-   if (height == 0) height = 1;                // To prevent divide by 0
-   GLfloat aspect = (GLfloat)width / (GLfloat)height;
 
-   // Set the viewport to cover the new window
-   glViewport(0, 0, width, height);
 
-   // Set the aspect ratio of the clipping volume to match the viewport
-   glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
-   glLoadIdentity();             // Reset
-   // Enable perspective projection with fovy, aspect, zNear and zFar
-   gluPerspective(45.0f, aspect, 0.1f, 100.0f);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------------------
+// Função specialKeys()
+// ----------------------------------------------------------
+void specialKeys( int key, int x, int y ) {
+
+  //  Seta direita - aumenta rotação em 5 graus
+  if (key == GLUT_KEY_RIGHT)
+    rotate_y += 5;
+
+  //  Seta para esquerda - diminui a rotação por 5 graus
+  else if (key == GLUT_KEY_LEFT)
+    rotate_y -= 5;
+
+  else if (key == GLUT_KEY_UP)
+    rotate_x += 5;
+
+  else if (key == GLUT_KEY_DOWN)
+    rotate_x -= 5;
+
+  //  Requisitar atualização do display
+  glutPostRedisplay();
+
 }
 
-/* Main function: GLUT runs as a console application starting at main() */
-int main(int argc, char** argv) {
-   glutInit(&argc, argv);            // Initialize GLUT
-   glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
-   glutInitWindowSize(640, 480);   // Set the window's initial width & height
-   glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
-   glutCreateWindow(title);          // Create window with the given title
-   glutDisplayFunc(display);       // Register callback handler for window re-paint event
-   glutReshapeFunc(reshape);       // Register callback handler for window re-size event
-   initGL();                       // Our own OpenGL initialization
-   glutMainLoop();                 // Enter the infinite event-processing loop
-   return 0;
+// Programa principal
+int main(int argc, char** argv){
+
+  // Inicia GLUT e processa argumentos passados por linha de comandos
+  glutInit(&argc, argv);
+
+  // Avisa a GLUT que tipo de modo de exibi��o deve ser usado quando a janela � criada
+  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+
+  // Cria uma janela GLUT que permite a execu��o de comandos OpenGL
+  glutCreateWindow("Nave Inimiga");
+
+  // Define a fun��o respons�vel por redesenhar a janela OpenGL sempre que necess�rio
+  glutDisplayFunc(Desenha);
+
+  glutSpecialFunc(specialKeys);
+  // Inicializa��es de OpenGL executadas antes da exibi��o do desenho
+  Inicializa();
+
+  // Inicia o processamento de eventos de GLUT. O controle do programa
+  // passa a GLUT, que inicia o gerenciamento dos eventos
+  glutMainLoop();
+
+  return 0;
 }
