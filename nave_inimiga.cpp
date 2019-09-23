@@ -93,18 +93,15 @@ glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
 
       // Right
       glVertex3f(0.0, 0.5, 0.0);
-      glColor3f(0.0, 0.0, 0.5);     // Blue
       glVertex3f(0.5, -0.5, 0.5);
       glVertex3f(0.5, -0.5, -0.5);
 
       // Back
       glVertex3f(0.0, 0.5, 0.0);
-      glColor3f(0.0, 0.5, 0.0);     // Green
       glVertex3f(0.5, -0.5, -0.5);
       glVertex3f(-0.5, -0.5, -0.5);
 
       // Left
-      glColor3f(0.5,0.0,0.0);       // Red
       glVertex3f( 0.0, 0.5, 0.0);
       glVertex3f(-0.5,-0.5,-0.5);
       glVertex3f(-0.5,-0.5, 0.5);
@@ -114,25 +111,22 @@ glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
     glRotatef(180,1,0,0);
     glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
-      glColor3f(1.0, 0.0, 0.0);     // Red
+      glColor3f(0.0, 0.5, 0.5);     // Red
       glVertex3f( 0.0, -0.5, 0.0);
       glVertex3f(0.5, 0.5, -0.5);
       glVertex3f(-0.5, 0.5, -0.5);
 
       // Right
       glVertex3f(0.0, -0.5, 0.0);
-      glColor3f(0.0, 0.0, 0.5);     // Blue
       glVertex3f(-0.5, 0.5, -0.5);
       glVertex3f(-0.5, 0.5, 0.5);
 
       // Back
       glVertex3f(0.0, -0.5, 0.0);
-      glColor3f(0.0, 0.5, 0.0);     // Green
       glVertex3f(-0.5, 0.5, 0.5);
       glVertex3f(0.5, 0.5, 0.5);
 
       // Left
-      glColor3f(0.5,0.0,0.0);       // Red
       glVertex3f( 0.0, -0.5, 0.0);
       glVertex3f(0.5,0.5,0.5);
       glVertex3f(0.5,0.5, -0.5);
@@ -143,7 +137,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 //glRotatef(180,1,0,0);
    glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
-      glColor3f(1.0, 0.0, 0.0);     // Red
+      glColor3f(0.1, 0.1, 0.0);     // Red
       glVertex3f( 0.0, -0.25, 0.0);
       glVertex3f(0.25, 0.25, -0.25);
       glVertex3f(-0.25, 0.25, -0.25);
@@ -173,7 +167,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
    glBegin(GL_POLYGON);
 
-  glColor3f(   0.3,  0.1, 0.7 );
+  glColor3f(    0.1,  0.0,  0.1 );
   glVertex3f(  0.2, -0.5, 0.2 );
   glVertex3f(  0.2,  0.5, 0.2 );
   glVertex3f( -0.2,  0.5, 0.2 );
@@ -182,7 +176,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado roxo - DIREITA
  glBegin(GL_POLYGON);
-  glColor3f(  1.0,  0.0,  1.0 );
+  glColor3f(   0.1,  0.0,  0.1 );
   glVertex3f( 0.2, -0.5, -0.2 );
   glVertex3f( 0.2,  0.5, -0.2 );
   glVertex3f( 0.2,  0.5,  0.2 );
@@ -191,7 +185,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado verde - ESQUERDA
  glBegin(GL_POLYGON);
-  glColor3f(   0.4,  1.0,  0.0 );
+  glColor3f(    0.1,  0.0,  0.1 );
   glVertex3f( -0.2, -0.5, 0.2 );
   glVertex3f( -0.2,  0.5,  0.2 );
   glVertex3f( -0.2,  0.5, -0.2 );
@@ -200,7 +194,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado azul - TOPO
  glBegin(GL_POLYGON);
-  glColor3f(   0.0,  0.2,  1.0 );
+  glColor3f(    0.1,  0.0,  0.1 );
   glVertex3f(  0.2,  0.5,  0.2 );
   glVertex3f(  0.2,  0.5, -0.2 );
   glVertex3f( -0.2,  0.5, -0.2 );
@@ -209,7 +203,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado vermelho - BASE
  glBegin(GL_POLYGON);
-  glColor3f(   1.0,  0.0,  0.0 );
+  glColor3f(   0.1,  0.0,  0.1 );
   glVertex3f(  0.2, -0.5, -0.2 );
   glVertex3f(  0.2, -0.5,  0.2 );
   glVertex3f( -0.2, -0.5, 0.2);

@@ -118,7 +118,7 @@ glBegin(GL_TRIANGLES);
 
    glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
-      glColor3f(1.0, 0.0, 0.0);     // Red
+      glColor3f(0.0, 0.5, 0.5);     // Red
       glVertex3f( 0.0, -0.25, 0.0);
       glVertex3f(0.25, 0.25, -0.25);
       glVertex3f(-0.25, 0.25, -0.25);
@@ -146,7 +146,7 @@ glBegin(GL_TRIANGLES);
 
    glBegin(GL_POLYGON);
 
-  glColor3f(   0.3,  0.1, 0.7 );
+  glColor3f(   0.0,  0.5, 1.0 );
   glVertex3f(  0.2, -0.5, 0.2 );
   glVertex3f(  0.2,  0.5, 0.2 );
   glVertex3f( -0.2,  0.5, 0.2 );
