@@ -110,6 +110,8 @@ glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       glVertex3f(-0.5,-0.5, 0.5);
    glEnd();
 
+   glTranslatef(0.0f, 0.30f, 0.0f);
+    glRotatef(180,1,0,0);
     glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
       glColor3f(1.0, 0.0, 0.0);     // Red
@@ -137,7 +139,8 @@ glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
    glEnd();
 
 
-
+glTranslatef(0.0f, -0.4f, 0.0f);
+//glRotatef(180,1,0,0);
    glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
       glColor3f(1.0, 0.0, 0.0);     // Red
@@ -160,6 +163,70 @@ glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       glVertex3f(0.25,0.25,0.25);
       glVertex3f(0.25,0.25, -0.25);
    glEnd();
+
+
+
+
+
+
+     glTranslatef(0.0f, 1.7f, 0.0f);
+
+   glBegin(GL_POLYGON);
+
+  glColor3f(   0.3,  0.1, 0.7 );
+  glVertex3f(  0.2, -0.5, 0.2 );
+  glVertex3f(  0.2,  0.5, 0.2 );
+  glVertex3f( -0.2,  0.5, 0.2 );
+  glVertex3f( -0.2, -0.5, 0.2 );
+  glEnd();
+
+  // Lado roxo - DIREITA
+ glBegin(GL_POLYGON);
+  glColor3f(  1.0,  0.0,  1.0 );
+  glVertex3f( 0.2, -0.5, -0.2 );
+  glVertex3f( 0.2,  0.5, -0.2 );
+  glVertex3f( 0.2,  0.5,  0.2 );
+  glVertex3f( 0.2, -0.5,  0.2 );
+  glEnd();
+
+  // Lado verde - ESQUERDA
+ glBegin(GL_POLYGON);
+  glColor3f(   0.4,  1.0,  0.0 );
+  glVertex3f( -0.2, -0.5, 0.2 );
+  glVertex3f( -0.2,  0.5,  0.2 );
+  glVertex3f( -0.2,  0.5, -0.2 );
+  glVertex3f( -0.2, -0.5, -0.2 );
+  glEnd();
+
+  // Lado azul - TOPO
+ glBegin(GL_POLYGON);
+  glColor3f(   0.0,  0.2,  1.0 );
+  glVertex3f(  0.2,  0.5,  0.2 );
+  glVertex3f(  0.2,  0.5, -0.2 );
+  glVertex3f( -0.2,  0.5, -0.2 );
+  glVertex3f( -0.2,  0.5,  0.2 );
+  glEnd();
+
+  // Lado vermelho - BASE
+ glBegin(GL_POLYGON);
+  glColor3f(   1.0,  0.0,  0.0 );
+  glVertex3f(  0.2, -0.5, -0.2 );
+  glVertex3f(  0.2, -0.5,  0.2 );
+  glVertex3f( -0.2, -0.5, 0.2);
+  glVertex3f( -0.2, -0.5, -0.2 );
+  glEnd();
+
+
+
+
+
+
+
+
+
+
+
+
   // Executa os comandos OpenGL para renderiza��o
   glFlush();
   glutSwapBuffers();
