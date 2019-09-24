@@ -1,3 +1,5 @@
+//NAVEINIMIGA
+
 // OpenGL Utility Toolkit
 #include<GL/gl.h>
 #include<GL/glut.h>
@@ -12,7 +14,7 @@
 // ----------------------------------------------------------
 void display();
 void specialKeys();
-
+void DesenhaCUBAO();
 // ----------------------------------------------------------
 // Variáveis Globais
 // ----------------------------------------------------------
@@ -83,61 +85,40 @@ glBegin(GL_TRIANGLES);
     glVertex3f(0.0, 0.25, 0.0);
   glEnd();
 */
-
-glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
+glRotatef(180,1,0,0);
+glBegin(GL_TRIANGLES);
+         // Begin drawing the pyramid with 4 triangles
       // Front
       glColor3f(1.0, 0.0, 0.0);     // Red
-      glVertex3f( 0.0, 0.5, 0.0);
-      glVertex3f(-0.5, -0.5, 0.5);
-      glVertex3f(0.5, -0.5, 0.5);
+      glVertex3f( 0.0, -0.50, 0.0);
+      glVertex3f(0.50, 0.50, -0.50);
+      glVertex3f(-0.50, 0.50, -0.50);
 
       // Right
-      glVertex3f(0.0, 0.5, 0.0);
-      glVertex3f(0.5, -0.5, 0.5);
-      glVertex3f(0.5, -0.5, -0.5);
+      glVertex3f(0.0, -0.50, 0.0);
+      glColor3f( 0.0, 1.0, 0.0 );
+      glVertex3f(-0.50, 0.50, -0.50);
+      glVertex3f(-0.50, 0.50, 0.50);
 
       // Back
-      glVertex3f(0.0, 0.5, 0.0);
-      glVertex3f(0.5, -0.5, -0.5);
-      glVertex3f(-0.5, -0.5, -0.5);
+      glVertex3f(0.0, -0.50, 0.0);
+      glColor3f( 0.0, 0.0, 1.0 );
+      glVertex3f(-0.50, 0.50, 0.50);
+      glVertex3f(0.50, 0.50, 0.50);
 
       // Left
-      glVertex3f( 0.0, 0.5, 0.0);
-      glVertex3f(-0.5,-0.5,-0.5);
-      glVertex3f(-0.5,-0.5, 0.5);
-   glEnd();
-
-   glTranslatef(0.0f, 0.30f, 0.0f);
-    glRotatef(180,1,0,0);
-    glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
-      // Front
-      glColor3f(0.0, 0.5, 0.5);     // Red
-      glVertex3f( 0.0, -0.5, 0.0);
-      glVertex3f(0.5, 0.5, -0.5);
-      glVertex3f(-0.5, 0.5, -0.5);
-
-      // Right
-      glVertex3f(0.0, -0.5, 0.0);
-      glVertex3f(-0.5, 0.5, -0.5);
-      glVertex3f(-0.5, 0.5, 0.5);
-
-      // Back
-      glVertex3f(0.0, -0.5, 0.0);
-      glVertex3f(-0.5, 0.5, 0.5);
-      glVertex3f(0.5, 0.5, 0.5);
-
-      // Left
-      glVertex3f( 0.0, -0.5, 0.0);
-      glVertex3f(0.5,0.5,0.5);
-      glVertex3f(0.5,0.5, -0.5);
+      glVertex3f( 0.0, -0.50, 0.0);
+      glColor3f( 1.0, 0.0, 1.0 );
+      glVertex3f(0.50,0.50,0.50);
+      glVertex3f(0.50,0.50, -0.50);
    glEnd();
 
 
-glTranslatef(0.0f, -0.4f, 0.0f);
-//glRotatef(180,1,0,0);
+
+
    glBegin(GL_TRIANGLES);           // Begin drawing the pyramid with 4 triangles
       // Front
-      glColor3f(0.1, 0.1, 0.0);     // Red
+      glColor3f(1.0, 0.0, 0.0);     // Red
       glVertex3f( 0.0, -0.25, 0.0);
       glVertex3f(0.25, 0.25, -0.25);
       glVertex3f(-0.25, 0.25, -0.25);
@@ -158,16 +139,14 @@ glTranslatef(0.0f, -0.4f, 0.0f);
       glVertex3f(0.25,0.25, -0.25);
    glEnd();
 
+   ///////////////////////////////////////////aaaaaaaaaaaaaaaaaaa
 
-
-
-
-
-     glTranslatef(0.0f, 1.7f, 0.0f);
+ //glLoadIdentity();                  // Reset the model-view matrix
+   glTranslatef(0.0f, 0.75f, 0.0f);
 
    glBegin(GL_POLYGON);
 
-  glColor3f(    0.1,  0.0,  0.1 );
+  glColor3f(   0.3,  0.1, 0.7 );
   glVertex3f(  0.2, -0.5, 0.2 );
   glVertex3f(  0.2,  0.5, 0.2 );
   glVertex3f( -0.2,  0.5, 0.2 );
@@ -176,7 +155,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado roxo - DIREITA
  glBegin(GL_POLYGON);
-  glColor3f(   0.1,  0.0,  0.1 );
+  glColor3f(  1.0,  0.0,  1.0 );
   glVertex3f( 0.2, -0.5, -0.2 );
   glVertex3f( 0.2,  0.5, -0.2 );
   glVertex3f( 0.2,  0.5,  0.2 );
@@ -185,7 +164,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado verde - ESQUERDA
  glBegin(GL_POLYGON);
-  glColor3f(    0.1,  0.0,  0.1 );
+  glColor3f(   0.4,  1.0,  0.0 );
   glVertex3f( -0.2, -0.5, 0.2 );
   glVertex3f( -0.2,  0.5,  0.2 );
   glVertex3f( -0.2,  0.5, -0.2 );
@@ -194,7 +173,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado azul - TOPO
  glBegin(GL_POLYGON);
-  glColor3f(    0.1,  0.0,  0.1 );
+  glColor3f(   0.0,  0.2,  1.0 );
   glVertex3f(  0.2,  0.5,  0.2 );
   glVertex3f(  0.2,  0.5, -0.2 );
   glVertex3f( -0.2,  0.5, -0.2 );
@@ -203,7 +182,7 @@ glTranslatef(0.0f, -0.4f, 0.0f);
 
   // Lado vermelho - BASE
  glBegin(GL_POLYGON);
-  glColor3f(   0.1,  0.0,  0.1 );
+  glColor3f(   1.0,  0.0,  0.0 );
   glVertex3f(  0.2, -0.5, -0.2 );
   glVertex3f(  0.2, -0.5,  0.2 );
   glVertex3f( -0.2, -0.5, 0.2);
@@ -211,20 +190,31 @@ glTranslatef(0.0f, -0.4f, 0.0f);
   glEnd();
 
 
-
-
-
-
-
-
-
-
-
-
   // Executa os comandos OpenGL para renderiza��o
   glFlush();
   glutSwapBuffers();
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------
 // Função specialKeys()
@@ -264,6 +254,7 @@ int main(int argc, char** argv){
 
   // Define a fun��o respons�vel por redesenhar a janela OpenGL sempre que necess�rio
   glutDisplayFunc(Desenha);
+
   glutSpecialFunc(specialKeys);
   // Inicializa��es de OpenGL executadas antes da exibi��o do desenho
   Inicializa();
