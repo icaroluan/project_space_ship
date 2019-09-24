@@ -1,16 +1,3 @@
-/*
- * GLUT Shapes Demo
- *
- * Written by Nigel Stewart November 2003
- *
- * This program is test harness for the sphere, cone
- * and torus shapes in GLUT.
- *
- * Spinning wireframe and smooth shaded shapes are
- * displayed until the ESC or q key is pressed.  The
- * number of geometry stacks and slices can be adjusted
- * using the + and - keys.
- */
 #include <windows.h>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -22,8 +9,6 @@
 
 static int slices = 16;
 static int stacks = 16;
-
-/* GLUT callback Handlers */
 
 static void resize(int width, int height)
 {
@@ -88,15 +73,11 @@ static void idle(void)
     glutPostRedisplay();
 }
 
-
-
-/* Program entry point */
-
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
     glutInitWindowSize(480,320);
-    //glutInitWindowPosition(10,10);
+
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 
     glutCreateWindow("Meteoro");
